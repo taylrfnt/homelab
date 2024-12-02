@@ -3,7 +3,7 @@
 ### Hardware
 ### Software/OS
 
-## Using this repo for homelab management
+## Managing homelab
 
 ## References
 
