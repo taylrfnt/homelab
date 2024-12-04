@@ -70,7 +70,7 @@ to interact with the control plane; however, it is not necessary.
 To manage homelab, you will need the following installed on your host machine:
 * kubectl
 * kustomize
-* helm* (installed via helmfile)
+* helm* (dependency of helmfile)
 * helmfile
 
 Assuming you have all of the relevant prequisite packages installed, there are a few simple steps to get started accessing
@@ -115,9 +115,34 @@ homelab-0   Ready    control-plane,etcd,master   63d   v1.30.4+k3s1
 * Pro tip: aliasing `kubectl` to `k` in your profile greatly reduces the number of keystrokes invovled with managing
 a k3s cluster.
 
-## Restart homelab k3s (gracefully)
+### Updating deployments
+homelab uses helmfile (and helm charts) as well as kustomize for managing k3s resources.  If you need to update or manage
+a k3s deployment, you will need to modify the respective helmchart and values appropriately, then run a simple apply:
+```
+helmfile apply
+```
+
+### Restart homelab k3s (gracefully)
+k3s will not always gracefully recover in the event of an unepxected interruption (e.g. power surge or a host being uplugged).  However,
+planned/manual changes should not impact the cluster health if proper procedure is followed.
+
+Should you need to take a node down for maintenance or recover it, an easy way to do this is listed below.
+1. SSH into the host you wish to take down.
+2. Issue the respective [k3s stop command](https://docs.k3s.io/upgrades/killall) needed for your use case.
+3. Perform upgrades/make changes needed.
+4. Restart k3s using the appropriate [restart command](https://docs.k3s.io/upgrades/killall).  You should not need to re-create the
+cluster; however, if you do find a need to re-create the homelab cluster from scratch, start with homelab-0.
+
+### Rebuilding homelab's k3s cluster from scratch
+Don't do this.  Please.
 
 ### Adding new nodes to homelab
+To add a new node to the homelab cluster, ensure they are wired together via CAT5 cable (to share LAN) and have NixOS installed and
+running.
+
+You can use a simple `git` clone of this repo to fetch the baseline homelab configs (provided the new host has the same hardware specs), copy/modify them for the new host, and run a Nix rebuild.  Alternatively, you can use `nixos-anywhere`, if that is your preference.
+
+The flake configuration for homelab is set to auto-join existing an existing cluster, provided the k3s token file is present.  If you use `nixos-anywhere`, you can run it from one of the existing nodes to build the target derivations without needing to copy the file, otherwise you should copy the file from an existing host to the new host machine to run a vanilla Nix flake rebuild.
 
 ## References
 homelab was built intially by following along with [Elliott at Dreams of Autonomy](https://youtu.be/2yplBzPCghA).
