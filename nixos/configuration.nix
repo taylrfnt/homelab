@@ -94,8 +94,7 @@
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
     openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDbMES1tgTg8Yxt85otagzi03dS5dXaUbq6HY9PrjI+3O8Q6szlKd2HBOP3O1RmBG2orHv0oK4KuEIhr/lypAanl4uFVxs49diQ7jjwFxFXlTQWcPdGRFu+8OXlqF15AUCe1tCo+xXruW3rJqDfQkkRlneU9iuDrF2Es/pSXdOslaBYQeMZLVifMZ7ENLsrEH7mdB9RTS1Xm+PuI1SYxCsifwPSxfaIcQwCB72iAN1xONNrh/XdzqtEQ877P/WWeJrlydzqaraU7x1f0RdgpS6mgJunruBcMu4Fb6lXuZx+116vMoYiVEMo0iOa6RkP7PZl2UuAumoHTy8TDMUFZDajczR21GZwsGY6OSZbndMcvijH/1DBm05rnKrRrHRxR9KznwBIYeUZFx3Z3XZZ3xCHRNuSYz0GnMICe/KWxwPltyLrP4zSEoz24ix1S/DUxttKKovnil38s1sCKZLaCyygg8p5qmVHqaM1ELccjyvtoxM69/cwhVK5/R8A9KKyEKU= SOURCE:Macmini"
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQClt9jWLEwZUvIP8RXK8BLC5ToNQTC/QQsPkx/6SRiU3pixIeZK4Rth4ncmwBFbnkAhs8zkCss4aw2UmgBrJrhiyDvnuPSoiuh+RRhGWZlYcB0lT1IBgayXpA+WV0uX/HvibElQZ2RHgq/rICmnnXustx36/lskmmSvu6/TqH4y7ji8HS4T+BAR0GCmtXxojAHiTw6KICSmfFG8Ey3yjgJQWs2tajGJ+ginMMQMJTj2Glv3t32Wrv9o60VP+l2jVpQt0xzCiR84bogLqev1YVCeytVaDvJ4pmtqT1YKYbiR+Uicqnhf8b5RuLcF0oky9UeKUAa5+r+hJR9lc1l8tjnH6YSBtG9ELUIBiNq6xLM4OstPuIYT9bcdAGYhW38JlJ79q+Nyxfx1/xpKatvjlpsKQPLSRLKDMidFXPt4EavROJ7B8l11tSpWK7/tjER/4MjV1PFgEsQ1Xljdhado8rqRkrjwevVDMhPw0p3WeTMa84wenfmZ6AO5tCWcg6gKTSU= SOURCE:taylor.font@AMAN097HT02YM"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDA9/yQ+8yZ07ptd0xeaDlyEcweAzdwTzfkPHgVbU7YvKSs/05tqkvitPrFGzBoCm0HeBmHIYyYbhKMKokjm4xSDKt9qlNfRRuF7jSAI4BtNRniEsneX9tPXcLpg7OcZO8x5fJBbKqrQ17vYGJ4uP1arhmMvGtxv56jdEfw1/j2rlhdIOvfiR7cuMpoHBlk8M9pbo7uwjmhbPIk2YX+YFOvnRajXBSFAopZw6Nne9mGTcSrq2ke+WJO3UwUTGJ8S+P1Jdu9fd2qFqeZHIgebhKoU4IRbfvRNY+tle2bgUPcoihFi4kaoa2fh/0usAExKXW0Ab7U1lLlsh+CnuJrbaoTmeKA5N2AIABbUdAUL5TXxeUaX0fvmQ7yop8F7QoxrfSidkvdz4TWQbu49PH1pr9WgOjdyx3ddOZEm2gtTH6uElpIRxVAP+fr4bG0YtnoOJ6TVhoe91FDGSiYHnvWEMHVPQwz4Rm62GePcMogOyZwxTkStutBjZCDTHdKnosZR80= taylorfont@amaterasu"
     ];
   };
 
@@ -122,7 +121,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.banner = "                                        \n   _                 _     _       ___  \n  | |_ ___ _____ ___| |___| |_ ___|   | \n  |   | . |     | -_| | .'| . |___| | | \n  |_|_|___|_|_|_|___|_|__,|___|   |___| \n                                        \n                                         \n\nWelcome to homelab.                   \n\n";
+  services.openssh.banner = "\n   _                 _     _ \n  | |_ ___ _____ ___| |___| |_\n  |   | . |     | -_| | .'| . |\n  |_|_|___|_|_|_|___|_|__,|___|\n\n Welcome to homelab.\n\n";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ 80 ];
@@ -154,3 +153,4 @@
   system.stateVersion = "23.11"; # Did you read the comment?
 
 }
+

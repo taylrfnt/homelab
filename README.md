@@ -13,7 +13,10 @@ homelab uses the following specs (updated as homelab grows)
   * Storage: 500 GB PCIE3.0 SSD
 
 **homelab-1**
-* N/A
+* Beelink EQ13
+  * CPU: Intel 12th Gen (Ader Lake) N100
+  * RAM: 16GB DDR4
+  * Storage: 500 GB PCIE3.0 SSD
 
 **homelab-2**
 * N/A
@@ -26,38 +29,52 @@ homelab uses the following specs (updated as homelab grows)
 * k3s v1.30.4+k3s1
 
 **homelab-1**
-* N/A
+* NixOS 24.05.20240930.1719f27 (Uakari)
+    * nixpkgs = `unstable`
+    * extra-experimental-features = `nix-command flakes`
+* k3s v1.30.4+k3s1
 
 **homelab-2**
 * N/A
 
-## Managing homelab
+## Getting started
 ### Configuration
 homelab configuration has been written declaratively in the `nixos` directory.  Modifying the configuration will work exactly like any
 NixOS machine.  **The homelab does not use home manager!!**
 
-### Rebuilding homelab flakes
-If you find a need to modify homelab configurations, you will need to rebuild each flake.  There are two options to rebuild your flakes.
+### Adding new nodes to the cluster
+Adding a new node is simple - follow the process listed in Option 2 of the "(Re)building homelab flakes" section below.
 
-**Option 1: Direct SSH & Vanilla Nix**
-A rebuild can be initiated by opening a remote
-SSH session into each host and running the following command per host:
+The only change needed will be to overwrite the `services.k3s.tokenFile` entry with a plaintext `services.k3s.token` locally with the k3s
+token, since the token file will not exist on an brand new/out-of-box environment.  All other configurations should work as-is.
+
+## Managing homelab
+### (Re)building homelab flakes
+If you find a need to modify homelab configurations, you will need to rebuild each flake.  There are two options to (re)build your flakes.
+
+**Option 1: Direct SSH & Vanilla Nix (requires an existing NixOS system)**
+A rebuild can be initiated by opening a remote SSH session into each host, if they are already running NixOS.  To perform the system build
+this way, you will need to clone this repo:
 ```
-❯ sudo nixos-rebuild switch --flake /path/to/config#<flake-name>
+git clone <repo url> ~/homelab
+```
+Once the repo is cloned, running the following command per host:
+```
+❯ sudo nixos-rebuild switch --flake ~/homelab/nixos#<flake-name>
 ```
 The flake names will be `homelab-0`, `homelab-1`, and `homelab-2`, repsectively.
 
 **Option 2: `nixos-anywhere`**
 Alternatively, you can use [`nixos-anywhere`](https://github.com/nix-community/nixos-anywhere) to remotely rebuild and push new flakes.
-In this method, you will simply need a copy of the configurations you wish to apply to homelab and be within the same network as the
-target node(s).
+In this method, you need to nly have a bootable USB for NixOS to run on, boot it, and create a password for the `nixos` user.  After that,
+you will simply need a copy of the configurations (files in this repo) you wish to apply to homelab and be able to SSH into the target node(s).
 
 Run the following command, injecting the proper user/host values for each node:
 ```
- sudo nix run github:nix-community/nixos-anywhere \
+nix run github:nix-community/nixos-anywhere \
 --extra-experimental-features "nix-command flakes" \
 --build-on-remote \
--- -- flake '/path/to/config#<flake-name>' <user>@<host>
+-- -- flake '/path/to/config#<flake-name>' nixos@<host>
 ```
 **_NOTE_**
 * The `--build-on-remote` flag is not strictly required in all cases; however, if you omit it you must have a machine capable of builing derivations for the target system.  This is an issue if your host machine uses an architecture different than the target (e.g. `aarch64-darwin` host building for an `x86-64` system).  In such cases, Option 1 is likley the easier of the two.
