@@ -121,7 +121,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.openssh.banner = "                                        \n   _                 _     _       ___  \n  | |_ ___ _____ ___| |___| |_ ___|   | \n  |   | . |     | -_| | .'| . |___| | | \n  |_|_|___|_|_|_|___|_|__,|___|   |___| \n                                        \n                                         \n\nWelcome to homelab.                   \n\n";
+  services.openssh.banner = "\n   _                 _     _ \n  | |_ ___ _____ ___| |___| |_\n  |   | . |     | -_| | .'| . |\n  |_|_|___|_|_|_|___|_|__,|___|\n\n Welcome to homelab.\n\n";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ 80 ];
