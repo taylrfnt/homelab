@@ -13,20 +13,11 @@ homelab uses the following specs (updated as homelab grows)
 | homelab-2 | N/A          |                                  |           |                    |
 
 ### Software/OS
-**homelab-0**
-* NixOS 24.05.20240930.1719f27 (Uakari)
-    * nixpkgs = `unstable`
-    * extra-experimental-features = `nix-command flakes`
-* k3s v1.30.4+k3s1
-
-**homelab-1**
-* NixOS 24.05.20240930.1719f27 (Uakari)
-    * nixpkgs = `unstable`
-    * extra-experimental-features = `nix-command flakes`
-* k3s v1.30.4+k3s1
-
-**homelab-2**
-* N/A
+| Host      | NIXOS                           | NIXPKGS    | EXTRA FEATURES       | K3S          |
+|-----------|---------------------------------|------------|----------------------|--------------|
+| homelab-0 | 24.05.20240930.1719f27 (Uakari) | `unstable` | `nix-command flakes` | v1.30.4+k3s1 |
+| homelab-1 | 24.05.20240930.1719f27 (Uakari) | `unstable` | `nix-command flakes` | v1.30.4+k3s1 |
+| homelab-2 | N/A                             |            |                      |              |
 
 ## Getting started
 ### Configuration
