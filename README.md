@@ -13,7 +13,7 @@ homelab uses the following specs (updated as homelab grows)
 | homelab-1 | Beelink EQ13 | Intel 12th Gen (Alder Lake) N100 | 16GB DDR4 | 500 GB PCIE3.0 SSD |
 | homelab-2 | N/A          |                                  |           |                    |
 
-### Software/OS
+### OS+Software
 | Host      | NIXOS                           | NIXPKGS    | EXTRA FEATURES       | K3S          |
 |-----------|---------------------------------|------------|----------------------|--------------|
 | homelab-0 | 24.05.20240930.1719f27 (Uakari) | `unstable` | `nix-command flakes` | v1.30.4+k3s1 |
