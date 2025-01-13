@@ -43,7 +43,7 @@ homelab configuration has been written declaratively in the `nixos` directory.  
 NixOS machine.  **The homelab does not use home manager!!**
 
 ### Adding new nodes to the cluster
-Adding a new node is simple - follow the process listed in Option 2 of the "(Re)building homelab flakes" section below.
+Adding a new node is simple - follow the process listed in Option 2 of the ["(Re)building homelab flakes"](https://github.com/taylrfnt/homelab/blob/main/README.md#rebuilding-homelab-flakes) section below.
 
 The only change needed will be to overwrite the `services.k3s.tokenFile` entry with a plaintext `services.k3s.token` locally with the k3s
 token, since the token file will not exist on an brand new/out-of-box environment.  All other configurations should work as-is.
