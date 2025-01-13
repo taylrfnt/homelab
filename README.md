@@ -6,20 +6,11 @@
 ## Cluster Specs
 homelab uses the following specs (updated as homelab grows)
 ### Hardware
-**homelab-0**
-* Beelink EQ13
-  * CPU: Intel 12th Gen (Ader Lake) N100
-  * RAM: 16GB DDR4
-  * Storage: 500 GB PCIE3.0 SSD
-
-**homelab-1**
-* Beelink EQ13
-  * CPU: Intel 12th Gen (Ader Lake) N100
-  * RAM: 16GB DDR4
-  * Storage: 500 GB PCIE3.0 SSD
-
-**homelab-2**
-* N/A
+| HOST      | MODEL        | CPU                              | RAM       | STORAGE            |
+|-----------|--------------|----------------------------------|-----------|--------------------|
+| homelab-0 | Beelink EQ13 | Intel 12th Gen (Alder Lake) N100 | 16GB DDR4 | 500 GB PCIE3.0 SSD |
+| homelab-1 | Beelink EQ13 | Intel 12th Gen (Alder Lake) N100 | 16GB DDR4 | 500 GB PCIE3.0 SSD |
+| homelab-2 | N/A          |                                  |           |                    |
 
 ### Software/OS
 **homelab-0**
