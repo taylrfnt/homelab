@@ -1,0 +1,21 @@
+---
+architecture: replication
+primary:
+  name: lab-primary
+  service:
+    type: LoadBalancer
+    ports:
+      postgresql: 5432
+  persistence:
+    enabled: true
+    volumeName: data
+    accessModes: [ReadWriteOnce]
+    size: 10Gi
+readReplicas:
+  name: lab-read
+  service:
+    type: LoadBalancer
+    ports:
+      postgresql: 5432
+  persistence:
+    enabled: true
