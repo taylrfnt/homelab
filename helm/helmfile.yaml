@@ -41,7 +41,8 @@ releases:
     namespace: pihole-system
     chart: bitnami/external-dns
     version: 8.3.8
-    values: [./values/externaldns.values.yaml]
+    values:
+      - ./values/externaldns.values.yaml
   # Postgres DB
   - name: postgres
     namespace: postgresql-system
