@@ -1,3 +1,4 @@
+---
 repositories:
   - name: longhorn
     url: https://charts.longhorn.io
@@ -16,13 +17,11 @@ releases:
     namespace: longhorn-system
     chart: longhorn/longhorn
     version: 1.7.1
-
   # Load Balancer
   - name: metallb
     namespace: metallb-system
     chart: metallb/metallb
     version: 0.14.8
-
   # Pihole
   - name: pihole
     namespace: pihole-system
@@ -30,7 +29,6 @@ releases:
     version: 2.26.1
     values:
       - ./values/pihole.values.yaml
-
   # nginx Ingress for Local Network
   - name: ingress-nginx-internal
     namespace: nginx-system
@@ -38,7 +36,6 @@ releases:
     version: 4.11.2
     values:
       - ./values/nginx-internal.values.yaml
-
   # Automatic DNS for Pihole
   - name: externaldns-pihole
     namespace: pihole-system
@@ -46,3 +43,9 @@ releases:
     version: 8.3.8
     values:
       - ./values/externaldns.values.yaml
+  # Postgres DB
+  - name: postgres
+    namespace: postgresql-system
+    chart: bitnami/postgresql
+    version: 16.4.5
+    values: [./values/postgresql.values.yaml]

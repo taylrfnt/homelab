@@ -1,6 +1,7 @@
+---
 provider: pihole
 policy: upsert-only
-txtOwnerId: "homelab"
+txtOwnerId: homelab
 pihole:
   server: http://pihole-web.pihole-system.svc.cluster.local
 extraEnvVars:
@@ -11,6 +12,5 @@ extraEnvVars:
         key: password
 serviceAccount:
   create: true
-  name: "external-dns"
-ingressClassFilters:
-  - nginx-internal
+  name: external-dns
+ingressClassFilters: [nginx-internal]
