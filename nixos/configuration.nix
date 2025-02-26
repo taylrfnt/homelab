@@ -23,7 +23,9 @@
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-  networking.networkmanager.settings.connection."ipv4.method" = "auto";
+  # networking.networkmanager.settings.connection."ipv4.method" = "auto";
+
+  programs.zsh.enable = true; 
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
