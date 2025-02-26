@@ -87,8 +87,10 @@
   users.users.taylor = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
     packages = with pkgs; [
       tree
+      fastfetch
     ];
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
