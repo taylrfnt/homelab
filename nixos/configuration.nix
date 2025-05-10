@@ -1,13 +1,16 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, meta, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-    ];
+  config,
+  lib,
+  pkgs,
+  meta,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+  ];
 
   nix = {
     extraOptions = ''
@@ -22,10 +25,10 @@
   networking.hostName = meta.hostname; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   # networking.networkmanager.settings.connection."ipv4.method" = "auto";
 
-  programs.zsh.enable = true; 
+  programs.zsh.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -59,15 +62,20 @@
     role = "server";
     tokenFile = /var/lib/rancher/k3s/server/token;
     extraFlags = toString ([
-	    "--write-kubeconfig-mode \"0644\""
-	    "--cluster-init"
-	    "--disable servicelb"
-	    "--disable traefik"
-	    "--disable local-storage"
-    ] ++ (if meta.hostname == "homelab-0" then [] else [
-	      "--server https://homelab-0:6443"
-    ]));
-    clusterInit = (meta.hostname == "homelab-0");
+        "--write-kubeconfig-mode \"0644\""
+        "--cluster-init"
+        "--disable servicelb"
+        "--disable traefik"
+        "--disable local-storage"
+      ]
+      ++ (
+        if meta.hostname == "homelab-0"
+        then []
+        else [
+          "--server https://homelab-0:6443"
+        ]
+      ));
+    clusterInit = meta.hostname == "homelab-0";
   };
 
   services.openiscsi = {
@@ -88,28 +96,29 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.taylor = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
     packages = with pkgs; [
       tree
       fastfetch
+      vim
     ];
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
     openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXAM2ekfY3J6RvvGzI7KgrmzOHUs/AuxS9+7yqppC87OKE6Gu7XlGukgvroyT1QGvvND9AB2YMd8ddGt96WzJnFWsKCVlu3n+3N4MeaM3bSXxouvc/Tse/dZ2noltzJ14WlQelOMgEpFBMUUd8pOOpAJrrpuF/7i44myrzqzEWTI1IdM60w6IXq6T0k/4nnBJNnpMiTSDBBdM+f5on2GCKwMB9NL05Elok32dLAnEIdFh+jlznq9fu+sMgAUeTnPAjibPwTNfrZN9dfzssp5oyz28K0Ffk17IJvwQlc5RjuBl5iCpd7ST2xDvpQsSSJdSJ7JE+/OeBTaA6R0bS6heBH+ojQgFJ+6NDlfoMSVSInnbSUWhK82D5zDJiQIdd/UXD9W6MDcDvPNa+/25qExhODl7Rx0EsI8zMTuQqM2gCfBt5inRiwCQrbECEDp6ROIP0gmJ+Z0CUytxDQznf3tN1WI/j+smlhyaazetaW3558E30DvrUHHSxq49/vEvmpE0= amaterasu access key"
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqx6TrikBV9vTWTRdR5WqC6pnG2Sxji+9vFoiJhc7EEnV9UzJg80EsDcLccw245Epu0utRYtyI9X2LqwOkicMeyVb/dNfTHZy4K48TforPAGEsogQllfp70d7+jaHQAolqTLW8uZQvjQV0Al07UtpFZuaTO9CiQ0IypUgJgZCIJDWUOqqJ6a75jrwy7sjp8DVRIgFAHUUSVdZfv6cMnnK0lohs+SFovUxyLZjAA0hJxNFk3NMRmj62aZGHsklOAzkz+bTYJLT7rbm+v/Fs8IDe8mKDk4N0n0wQOs+RPkc5eyxLINrWya61PSz5g725S4Co+BP3V8IHJJ9qU4aRd0beOls5Hn489uVh4cKr8BZrmbHbsWOnZB3SkVZ97qrO7CRmWg8pi4ISAXiyij9tsJYxdhAptqnbSjgAsVqD7I4Z/mZrGO5/1lb3KxwIVITRsWNiam+IL6Wszs03tcRm24PflieqR+iqkC9a2j2egUqE67/6Ecg3+qUIGaR4vh9FzJ8= taylor@amaterasu"
     ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim
-     k3s
-     cifs-utils
-     nfs-utils
-     git
-     dig
+    neovim
+    k3s
+    cifs-utils
+    nfs-utils
+    git
+    dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -154,6 +163,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
-
