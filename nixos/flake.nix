@@ -26,7 +26,6 @@
         name = name;
         value = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
             meta = {hostname = name;};
           };
           system = "x86_64-linux";

@@ -8,16 +8,13 @@
   meta,
   ...
 }: {
-  imports = [
-    inputs.sops-nix.nixosModules.sops
-  ];
 
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
     age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
     secrets."rancher/k3s/server/token" = {
-      path = "/var/lib/rancher/k3s/server/token";
+      # path = "/var/lib/rancher/k3s/server/token";
     };
   };
 
@@ -25,11 +22,13 @@
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+    gc.automatic = true;
   };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
 
   networking = {
     hostName = meta.hostname; # Define your hostname.
@@ -79,7 +78,7 @@
     k3s = {
       enable = true;
       role = "server";
-      tokenFile = /run/secrets/rancher/k3s/server/token;
+      tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([
           "--write-kubeconfig-mode \"0644\""
           "--cluster-init"
