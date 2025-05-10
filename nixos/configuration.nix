@@ -28,7 +28,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.systemd-boot.configurationLimit = 5;
 
   networking = {
     hostName = meta.hostname; # Define your hostname.
@@ -90,6 +90,7 @@
           if meta.hostname == "homelab-0"
           then []
           else [
+	    # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
             "--server https://homelab-0:6443"
           ]
         ));
