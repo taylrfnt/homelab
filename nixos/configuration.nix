@@ -9,8 +9,17 @@
   ...
 }: {
   imports = [
-    # Include the results of the hardware scan.
+    inputs.sops-nix.nixosModules.sops
   ];
+
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+    secrets."rancher/k3s/server/token" = {
+      path = "/var/lib/rancher/k3s/server/token";
+    };
+  };
 
   nix = {
     extraOptions = ''
@@ -22,11 +31,20 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = meta.hostname; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-  # networking.networkmanager.settings.connection."ipv4.method" = "auto";
+  networking = {
+    hostName = meta.hostname; # Define your hostname.
+
+    # Pick only one of the below networking options.
+    # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+    # networkmanager.settings.connection."ipv4.method" = "auto";
+
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ 80 ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    firewall.enable = false;
+  };
 
   programs.zsh.enable = true;
 
@@ -57,30 +75,38 @@
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
-  services.k3s = {
-    enable = true;
-    role = "server";
-    tokenFile = /var/lib/rancher/k3s/server/token;
-    extraFlags = toString ([
-        "--write-kubeconfig-mode \"0644\""
-        "--cluster-init"
-        "--disable servicelb"
-        "--disable traefik"
-        "--disable local-storage"
-      ]
-      ++ (
-        if meta.hostname == "homelab-0"
-        then []
-        else [
-          "--server https://homelab-0:6443"
+  services = {
+    k3s = {
+      enable = true;
+      role = "server";
+      tokenFile = /run/secrets/rancher/k3s/server/token;
+      extraFlags = toString ([
+          "--write-kubeconfig-mode \"0644\""
+          "--cluster-init"
+          "--disable servicelb"
+          "--disable traefik"
+          "--disable local-storage"
         ]
-      ));
-    clusterInit = meta.hostname == "homelab-0";
-  };
+        ++ (
+          if meta.hostname == "homelab-0"
+          then []
+          else [
+            "--server https://homelab-0:6443"
+          ]
+        ));
+      clusterInit = meta.hostname == "homelab-0";
+    };
 
-  services.openiscsi = {
-    enable = true;
-    name = "iqn.2016-04.com.open-iscsi:${meta.hostname}";
+    openiscsi = {
+      enable = true;
+      name = "iqn.2016-04.com.open-iscsi:${meta.hostname}";
+    };
+
+    # Enable the OpenSSH daemon.
+    openssh = {
+      enable = true;
+      banner = "\n   _                 _     _ \n  | |_ ___ _____ ___| |___| |_\n  |   | . |     | -_| | .'| . |\n  |_|_|___|_|_|_|___|_|__,|___|\n\n Welcome to homelab.\n\n";
+    };
   };
 
   # Enable CUPS to print documents.
@@ -106,7 +132,7 @@
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
     openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCqx6TrikBV9vTWTRdR5WqC6pnG2Sxji+9vFoiJhc7EEnV9UzJg80EsDcLccw245Epu0utRYtyI9X2LqwOkicMeyVb/dNfTHZy4K48TforPAGEsogQllfp70d7+jaHQAolqTLW8uZQvjQV0Al07UtpFZuaTO9CiQ0IypUgJgZCIJDWUOqqJ6a75jrwy7sjp8DVRIgFAHUUSVdZfv6cMnnK0lohs+SFovUxyLZjAA0hJxNFk3NMRmj62aZGHsklOAzkz+bTYJLT7rbm+v/Fs8IDe8mKDk4N0n0wQOs+RPkc5eyxLINrWya61PSz5g725S4Co+BP3V8IHJJ9qU4aRd0beOls5Hn489uVh4cKr8BZrmbHbsWOnZB3SkVZ97qrO7CRmWg8pi4ISAXiyij9tsJYxdhAptqnbSjgAsVqD7I4Z/mZrGO5/1lb3KxwIVITRsWNiam+IL6Wszs03tcRm24PflieqR+iqkC9a2j2egUqE67/6Ecg3+qUIGaR4vh9FzJ8= taylor@amaterasu"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8wB5rMU+3zBLjdzq4E4ziK74XTyPEqLRoiMmI7UbJ4 taylor@amaterasu"
     ];
   };
 
@@ -130,16 +156,6 @@
   # };
 
   # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.banner = "\n   _                 _     _ \n  | |_ ___ _____ ___| |___| |_\n  |   | . |     | -_| | .'| . |\n  |_|_|___|_|_|_|___|_|__,|___|\n\n Welcome to homelab.\n\n";
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ 80 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
