@@ -1,0 +1,13 @@
+keys:
+  - &admin_amaterasu age1g8f0yer8tnu36jpkksjpn4mp2qj3qyr9vdpqkzaks28ggwtmfyyq99z8qs
+  - &admin_taylor_homelab age1rqnnpf90vga3yrxvq7cem8nmw20suyr3cmdpvw9dnd4jhea6jvqqe6z776
+  - &server_homelab_0 age1jjsgtqxtmcqdl8zefz2s5scfvztyj7nhnrvw9t6ww3pjdmtd6dfs9kvlyu
+  - &server_homelab_1 age1py5mzh0fez4ujpz4hk438xh47vn4fwgm5wwsjhlnjhd93l7apdhs6707wt
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      - age:
+        - *admin_amaterasu
+        - *admin_taylor_homelab
+        - *server_homelab_0
+        - *server_homelab_1
