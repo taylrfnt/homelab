@@ -17,31 +17,25 @@
     disko,
     sops-nix,
     ...
-  } @ inputs: let
-    nodes = [
-      "homelab-0"
-      "homelab-1"
-      "homelab-2"
-    ];
-  in {
-    nixosConfigurations = builtins.listToAttrs (map (name: {
-        name = name;
-        value = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            meta = {hostname = name;};
-            pkgs-stable = import nixpkgs-stable;
+  } @ inputs: {
+    nixosConfigurations = {
+      "homelab-0" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          meta = {
+            hostname = "homelab-0";
+            inherit inputs;
           };
-          system = "x86_64-linux";
-          modules = [
-            # Modules
-            disko.nixosModules.disko
-            ./hardware-configuration.nix
-            ./disko-config.nix
-            sops-nix.nixosModules.sops
-            ./configuration.nix
-          ];
         };
-      })
-      nodes);
+        system = "x86_64-linux";
+        modules = [
+          # Modules
+          disko.nixosModules.disko
+          ./hardware-configuration.nix
+          ./disko-config.nix
+          sops-nix.nixosModules.sops
+          ./configuration.nix
+        ];
+      };
+    };
   };
 }
