@@ -75,13 +75,6 @@
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
-  # pin util-linux to stable (for now)
-  nixpkgs.overlays = [
-    (self: super: {
-      util-linux = nixpkgs-stable.util-linux;
-    })
-  ];
-
   services = {
     k3s = {
       enable = true;
