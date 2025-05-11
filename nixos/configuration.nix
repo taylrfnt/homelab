@@ -5,7 +5,7 @@
   config,
   lib,
   pkgs,
-  pkgs-stable,
+  nixpkgs-stable,
   meta,
   ...
 }: {
@@ -78,7 +78,7 @@
   # pin util-linux to stable (for now)
   nixpkgs.overlays = [
     (self: super: {
-      util-linux = pkgs-stable.util-linux;
+      util-linux = nixpkgs-stable.util-linux;
     })
   ];
 
