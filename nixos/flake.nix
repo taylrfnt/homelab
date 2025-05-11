@@ -42,7 +42,6 @@
           ./configuration.nix
         ];
       };
-    };
       "homelab-1" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           meta = {
