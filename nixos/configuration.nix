@@ -5,10 +5,10 @@
   config,
   lib,
   pkgs,
+  pkgs-stable,
   meta,
   ...
 }: {
-
   sops = {
     defaultSopsFile = ./secrets/secrets.yaml;
     defaultSopsFormat = "yaml";
@@ -77,6 +77,7 @@
   services = {
     k3s = {
       enable = true;
+      package = pkgs-stable.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([
@@ -85,13 +86,13 @@
           "--disable servicelb"
           "--disable traefik"
           "--disable local-storage"
-	  "--prefer-bundled-bin"
+          "--prefer-bundled-bin"
         ]
         ++ (
           if meta.hostname == "homelab-0"
           then []
           else [
-	    # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
+            # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
             "--server https://homelab-0:6443"
           ]
         ));
@@ -141,7 +142,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
-    k3s
     cifs-utils
     nfs-utils
     git

@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     # Disko
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -12,6 +13,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-stable,
     disko,
     sops-nix,
     ...
@@ -27,6 +29,7 @@
         value = nixpkgs.lib.nixosSystem {
           specialArgs = {
             meta = {hostname = name;};
+            pkgs-stable = import nixpkgs-stable;
           };
           system = "x86_64-linux";
           modules = [
