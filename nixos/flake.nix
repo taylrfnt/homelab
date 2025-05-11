@@ -23,14 +23,10 @@
         specialArgs = {
           meta = {
             hostname = "homelab-0";
-            inherit inputs;
             # pin util-linux to stable (for now)
-            nixpkgs.overlays = [
-              (self: super: {
-                util-linux = nixpkgs-stable.util-linux;
-              })
-            ];
           };
+          inherit inputs;
+          pkgs-stable = import nixpkgs-stable;
         };
         system = "x86_64-linux";
         modules = [
@@ -46,14 +42,9 @@
         specialArgs = {
           meta = {
             hostname = "homelab-0";
-            inherit inputs;
-            # pin util-linux to stable (for now)
-            nixpkgs.overlays = [
-              (self: super: {
-                util-linux = nixpkgs-stable.util-linux;
-              })
-            ];
           };
+          inherit inputs;
+          pkgs-stable = import nixpkgs-stable;
         };
         system = "x86_64-linux";
         modules = [

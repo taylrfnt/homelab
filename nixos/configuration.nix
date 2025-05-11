@@ -5,7 +5,7 @@
   config,
   lib,
   pkgs,
-  nixpkgs-stable,
+  pkgs-stable,
   meta,
   ...
 }: {
@@ -74,11 +74,10 @@
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
   services = {
     k3s = {
       enable = true;
-      # package = pkgs-stable.k3s;
+      package = pkgs-stable.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([
