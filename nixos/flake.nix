@@ -43,5 +43,29 @@
         ];
       };
     };
+      "homelab-1" = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          meta = {
+            hostname = "homelab-0";
+            inherit inputs;
+            # pin util-linux to stable (for now)
+            nixpkgs.overlays = [
+              (self: super: {
+                util-linux = nixpkgs-stable.util-linux;
+              })
+            ];
+          };
+        };
+        system = "x86_64-linux";
+        modules = [
+          # Modules
+          disko.nixosModules.disko
+          ./hardware-configuration.nix
+          ./disko-config.nix
+          sops-nix.nixosModules.sops
+          ./configuration.nix
+        ];
+      };
+    };
   };
 }
