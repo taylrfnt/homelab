@@ -43,9 +43,9 @@ releases:
     version: 8.3.8
     values:
       - ./values/externaldns.values.yaml
-  # Postgres DB
-  - name: postgres
-    namespace: postgresql-system
-    chart: bitnami/postgresql
-    version: 16.4.5
-    values: [./values/postgresql.values.yaml]
+  # # Postgres DB
+  # - name: postgres
+  #   namespace: postgresql-system
+  #   chart: bitnami/postgresql
+  #   version: 16.4.5
+  #   values: [./values/postgresql.values.yaml]
