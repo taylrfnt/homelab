@@ -23,7 +23,6 @@
         specialArgs = {
           meta = {
             hostname = "homelab-0";
-            # pin util-linux to stable (for now)
           };
           inherit inputs;
           pkgs-stable = import nixpkgs-stable;
@@ -32,6 +31,7 @@
         modules = [
           # Modules
           disko.nixosModules.disko
+          ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
           sops-nix.nixosModules.sops
@@ -50,6 +50,7 @@
         modules = [
           # Modules
           disko.nixosModules.disko
+          ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
           sops-nix.nixosModules.sops
