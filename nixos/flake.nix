@@ -44,10 +44,13 @@
       "homelab-1" = nixpkgs.lib.nixosSystem {
         specialArgs = {
           meta = {
-            hostname = "homelab-0";
+            hostname = "homelab-1";
           };
           inherit inputs;
-          pkgs-stable = import nixpkgs-stable;
+          pkgs-stable = import nixpkgs-stable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
         };
         system = "x86_64-linux";
         modules = [
