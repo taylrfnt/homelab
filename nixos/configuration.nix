@@ -85,6 +85,7 @@
           "--disable servicelb"
           "--disable traefik"
           "--disable local-storage"
+	  "--prefer-bundled-bin"
         ]
         ++ (
           if meta.hostname == "homelab-0"
