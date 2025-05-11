@@ -77,7 +77,7 @@
   services = {
     k3s = {
       enable = true;
-      # package = pkgs-stable.k3s;
+      package = pkgs-stable.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([
@@ -140,12 +140,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim
-    cifs-utils
-    nfs-utils
-    git
-    dig
+  environment.systemPackages = [
+    pkgs.neovim
+    pkgs.cifs-utils
+    pkgs.nfs-utils
+    pkgs.git
+    pkgs.dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

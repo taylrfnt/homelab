@@ -25,13 +25,16 @@
             hostname = "homelab-0";
           };
           inherit inputs;
-          pkgs-stable = import nixpkgs-stable;
+          pkgs-stable = import nixpkgs-stable {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
         };
         system = "x86_64-linux";
         modules = [
           # Modules
           disko.nixosModules.disko
-          ./overlays/util-linux.nix
+          # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
           sops-nix.nixosModules.sops
@@ -50,7 +53,7 @@
         modules = [
           # Modules
           disko.nixosModules.disko
-          ./overlays/util-linux.nix
+          # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
           sops-nix.nixosModules.sops
