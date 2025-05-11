@@ -77,7 +77,7 @@
   services = {
     k3s = {
       enable = true;
-      package = pkgs-stable.k3s;
+      # package = pkgs-stable.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([
