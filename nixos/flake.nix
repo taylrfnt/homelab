@@ -8,6 +8,10 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -16,6 +20,7 @@
     nixpkgs-stable,
     disko,
     sops-nix,
+    nvf,
     ...
   } @ inputs: {
     nixosConfigurations = {
@@ -34,6 +39,8 @@
         modules = [
           # Modules
           disko.nixosModules.disko
+          nvf.nixosModules.default
+          ./modules/nvf/default.nix
           # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
@@ -56,6 +63,8 @@
         modules = [
           # Modules
           disko.nixosModules.disko
+          nvf.nixosModules.default
+          ./modules/nvf/default.nix
           # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
