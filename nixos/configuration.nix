@@ -141,7 +141,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
-    pkgs.neovim
+    # pkgs.neovim
     pkgs.cifs-utils
     pkgs.nfs-utils
     pkgs.git
