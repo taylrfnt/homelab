@@ -24,8 +24,10 @@
     '';
     gc.automatic = true;
     # enable community cache for modules
-    substituters = ["http://nix-community.cachix.org"];
-    trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+    settings = {
+      substituters = ["http://nix-community.cachix.org"];
+      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+    };
   };
 
   # Use the systemd-boot EFI boot loader.
@@ -132,7 +134,10 @@
     packages = with pkgs; [
       tree
       fastfetch
-      vim
+      # vim
+      oh-my-posh
+      zsh-vi-mode
+      zsh-autosuggestions
     ];
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
