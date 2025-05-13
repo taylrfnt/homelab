@@ -12,6 +12,10 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hjem = {
+      url = "github:feel-co/hjem";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -21,6 +25,7 @@
     disko,
     sops-nix,
     nvf,
+    hjem,
     ...
   } @ inputs: {
     nixosConfigurations = {
@@ -41,6 +46,10 @@
           disko.nixosModules.disko
           nvf.nixosModules.default
           ./modules/nvf/default.nix
+          hjem.nixosModules.default
+          {
+            hjem.users.taylor = ./home/hjem/default.nix;
+          }
           # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
@@ -65,6 +74,10 @@
           disko.nixosModules.disko
           nvf.nixosModules.default
           ./modules/nvf/default.nix
+          hjem.nixosModules.default
+          {
+            hjem.users.taylor = ./home/hjem/default.nix;
+          }
           # ./overlays/util-linux.nix
           ./hardware-configuration.nix
           ./disko-config.nix
