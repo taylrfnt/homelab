@@ -54,7 +54,7 @@
           # hjem for user home mgmt
           hjem.nixosModules.default
           {
-            hjem.users.taylor = ./home/hjem/default.nix;
+            hjem.users.taylor = ./home/hjem/homelab.nix;
           }
           # sops for secrets
           sops-nix.nixosModules.sops
