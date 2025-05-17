@@ -46,6 +46,8 @@
           ./hardware/hardware-configuration.nix
           disko.nixosModules.disko
           ./modules/disko/disko-config.nix
+          ./system/homelab.nix
+          ./packages/homelab.nix
           # nvf for (neo)vim
           nvf.nixosModules.default
           ./modules/nvf/default.nix
