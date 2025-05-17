@@ -42,19 +42,23 @@
         };
         system = "x86_64-linux";
         modules = [
-          # Modules
+          # hardware scan & disko config
+          ./hardware/hardware-configuration.nix
           disko.nixosModules.disko
+          ./modules/disko/disko-config.nix
+          ./system/homelab.nix
+          ./packages/homelab.nix
+          # nvf for (neo)vim
           nvf.nixosModules.default
           ./modules/nvf/default.nix
+          # hjem for user home mgmt
           hjem.nixosModules.default
           {
-            hjem.users.taylor = ./home/hjem/default.nix;
+            hjem.users.taylor = ./home/hjem/homelab.nix;
           }
-          # ./overlays/util-linux.nix
-          ./hardware-configuration.nix
-          ./disko-config.nix
+          # sops for secrets
           sops-nix.nixosModules.sops
-          ./configuration.nix
+          ./modules/sops/homelab.nix
         ];
       };
       "homelab-1" = nixpkgs.lib.nixosSystem {
@@ -70,19 +74,23 @@
         };
         system = "x86_64-linux";
         modules = [
-          # Modules
+          # hardware scan & disko config
+          ./hardware/hardware-configuration.nix
           disko.nixosModules.disko
+          ./modules/disko/disko-config.nix
+          ./system/homelab.nix
+          ./packages/homelab.nix
+          # nvf for (neo)vim
           nvf.nixosModules.default
           ./modules/nvf/default.nix
+          # hjem for user home mgmt
           hjem.nixosModules.default
           {
-            hjem.users.taylor = ./home/hjem/default.nix;
+            hjem.users.taylor = ./home/hjem/homelab.nix;
           }
-          # ./overlays/util-linux.nix
-          ./hardware-configuration.nix
-          ./disko-config.nix
+          # sops for secrets
           sops-nix.nixosModules.sops
-          ./configuration.nix
+          ./modules/sops/homelab.nix
         ];
       };
     };

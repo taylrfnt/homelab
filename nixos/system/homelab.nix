@@ -9,15 +9,6 @@
   meta,
   ...
 }: {
-  sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
-    defaultSopsFormat = "yaml";
-    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-    secrets."rancher/k3s/server/token" = {
-      # path = "/var/lib/rancher/k3s/server/token";
-    };
-  };
-
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -131,14 +122,6 @@
     isNormalUser = true;
     extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      tree
-      fastfetch
-      # vim
-      oh-my-posh
-      zsh-vi-mode
-      zsh-autosuggestions
-    ];
     # Created using mkpasswd
     hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
     openssh.authorizedKeys.keys = [
@@ -146,18 +129,9 @@
     ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = [
-    # pkgs.neovim
-    pkgs.cifs-utils
-    pkgs.nfs-utils
-    pkgs.git
-    pkgs.dig
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
+  programs.ssh.startAgent = true;
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
