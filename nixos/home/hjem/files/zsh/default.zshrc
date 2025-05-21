@@ -1,11 +1,16 @@
 ############################################################################
+#                             visual & prompt                              #
+############################################################################
+keychain
+
+############################################################################
 #                                 ALIASES                                  #
 ############################################################################
 alias ls="eza -l -a --icons=always"
 alias k="kubectl"
 
 ############################################################################
-#                             VISUAL & PROMPT                              #
+#                             visual & prompt                              #
 ############################################################################
 # OMP
 eval "$(oh-my-posh init zsh --config $HOME/.config/oh-my-posh/zen.toml)"
@@ -20,7 +25,7 @@ _omp_redraw-prompt() {
   zle .reset-prompt
 }
 
-export POSH_VI_MODE="insert"
+export POSH_VI_MODE="insert" 
 
 function zvm_after_select_vi_mode() {
   case $ZVM_MODE in

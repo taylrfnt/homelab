@@ -17,6 +17,7 @@
     git
     dig
     zsh
+    keychain
   ];
 in {
   environment.systemPackages = globalPkgs;
