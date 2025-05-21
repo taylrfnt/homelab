@@ -131,7 +131,7 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
   # programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
