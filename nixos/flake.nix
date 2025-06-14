@@ -67,10 +67,10 @@
             hostname = "homelab-1";
           };
           inherit inputs;
-          pkgs-stable = import nixpkgs-stable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
+          # pkgs-stable = import nixpkgs-stable {
+          #   system = "x86_64-linux";
+          #   config.allowUnfree = true;
+          # };
         };
         system = "x86_64-linux";
         modules = [
