@@ -5,7 +5,7 @@
   config,
   lib,
   pkgs,
-  pkgs-stable,
+  # pkgs-stable,
   meta,
   ...
 }: {
@@ -73,7 +73,7 @@
   services = {
     k3s = {
       enable = true;
-      package = pkgs-stable.k3s;
+      package = pkgs.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
       extraFlags = toString ([

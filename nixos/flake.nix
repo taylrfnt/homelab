@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     # Disko
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +21,7 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-stable,
+    # nixpkgs-stable,
     disko,
     sops-nix,
     nvf,
@@ -35,10 +35,10 @@
             hostname = "homelab-0";
           };
           inherit inputs;
-          pkgs-stable = import nixpkgs-stable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
-          };
+          # pkgs-stable = import nixpkgs-stable {
+          #   system = "x86_64-linux";
+          #   config.allowUnfree = true;
+          # };
         };
         system = "x86_64-linux";
         modules = [
