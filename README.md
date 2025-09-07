@@ -149,6 +149,26 @@ to do this is listed below.
    [restart command](https://docs.k3s.io/upgrades/killall). You should not need
    to re-create the cluster.
 
+## Cluster Specs
+
+homelab uses the following specs (updated as homelab grows)
+
+### Hardware
+
+| HOST      | MODEL        | CPU                              | RAM       | STORAGE            |
+| --------- | ------------ | -------------------------------- | --------- | ------------------ |
+| homelab-0 | Beelink EQ13 | Intel 12th Gen (Alder Lake) N100 | 16GB DDR4 | 500 GB PCIE3.0 SSD |
+| homelab-1 | Beelink EQ13 | Intel 13th Gen (Twin Lake) N150  | 16GB DDR4 | 500 GB PCIE3.0 SSD |
+| homelab-2 | N/A          |                                  |           |                    |
+
+### OS+Software
+
+| Host      | NIXOS            | NIXPKGS    | EXTRA FEATURES       | K3S          |
+| --------- | ---------------- | ---------- | -------------------- | ------------ |
+| homelab-0 | 25.11 (Xantusia) | `unstable` | `nix-command flakes` | v1.33.1+k3s1 |
+| homelab-1 | 25.11 (Xantusia) | `unstable` | `nix-command flakes` | v1.33.1+k3s1 |
+| homelab-2 | N/A              |            |                      |              |
+
 ## References
 
 homelab was built intially by following along with
