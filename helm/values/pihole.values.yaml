@@ -4,9 +4,10 @@ DNS2: 1.1.1.1
 dnsmasq:
   customDnsEntries:
     - address=/homelab-0/192.168.1.64
-    - address=/homelab-1/192.168.1.67
-    - address=/postgres-primary.lab/192.168.1.194
-    - address=/postgres-read.lab/192.168.1.192
+    - address=/homelab-1/192.168.1.65
+    - address=/pihole.lab/192.168.1.250
+    # - address=/postgres-primary.lab/192.168.1.194
+    # - address=/postgres-read.lab/192.168.1.192
 persistentVolumeClaim:
   enabled: true
   storageClassName: longhorn
