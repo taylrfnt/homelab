@@ -5,7 +5,6 @@ dnsmasq:
   customDnsEntries:
     - address=/homelab-0/192.168.1.64
     - address=/homelab-1/192.168.1.65
-    - address=/pihole.lab/192.168.1.250
     # - address=/postgres-primary.lab/192.168.1.194
     # - address=/postgres-read.lab/192.168.1.192
 persistentVolumeClaim:
@@ -19,10 +18,12 @@ serviceWeb:
   loadBalancerIP: 192.168.1.250
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
+    external-dns.alpha.kubernetes.io/hostname: pihole.lab
   type: LoadBalancer
 serviceDns:
-  loadBalancerIP: 192.168.1.250
+  loadBalancerIP: 192.168.1.251
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
+    # external-dns.alpha.kubernetes.io/hostname: pihole.lab
   type: LoadBalancer
 replicaCount: 1

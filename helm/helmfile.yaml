@@ -8,25 +8,25 @@ repositories:
     url: https://mojo2600.github.io/pihole-kubernetes
   - name: ingress-nginx
     url: https://kubernetes.github.io/ingress-nginx
-  - name: bitnami
-    url: https://charts.bitnami.com/bitnami
+  - name: kubernetes-sigs
+    url: https://kubernetes-sigs.github.io/external-dns
 ---
 releases:
   # Distributed storage
   - name: longhorn
     namespace: longhorn-system
     chart: longhorn/longhorn
-    version: 1.7.1
+    version: 1.9.1
   # Load Balancer
   - name: metallb
     namespace: metallb-system
     chart: metallb/metallb
-    version: 0.14.8
+    version: 0.15.2
   # Pihole
   - name: pihole
     namespace: pihole-system
     chart: mojo2600/pihole
-    version: 2.26.1
+    version: 2.34.0
     values:
       - ./values/pihole.values.yaml
   # nginx Ingress for Local Network
@@ -39,8 +39,8 @@ releases:
   # Automatic DNS for Pihole
   - name: externaldns-pihole
     namespace: pihole-system
-    chart: bitnami/external-dns
-    version: 8.3.8
+    chart: kubernetes-sigs/external-dns
+    version: 1.18.0
     values:
       - ./values/externaldns.values.yaml
   # # Postgres DB
