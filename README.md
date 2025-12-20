@@ -1,8 +1,36 @@
 # Homelab
 
-This repo is a self-contained collection of various configurations used to manage my homelab cluster.  The homelab is a multi-node k3s cluster managed via helm running on NixOS server hosts.  It's declarative (almost) all the way down.  
+This repo is a self-contained collection of various configurations used to
+manage my homelab cluster. The homelab is a multi-node k3s cluster managed via
+helm running on NixOS server hosts. It's declarative (almost) all the way down.
 
-The homelab hosts a few important services I use frequently, like Pi-hole and (occasionally) a PostgreSQL database instance I can develop against in the comfort of my home network before going out to those expensive cloud hosts.
+The homelab hosts a few important services I use frequently, like Pi-hole and
+(occasionally) a PostgreSQL database instance I can develop against in the
+comfort of my home network before going out to those expensive cloud hosts.
+
+This repository is intended to be self-contained, with all configurations,
+specs, and documentation available in the respective directory. A high-level
+repsoitory structure is displayed below.
+
+````bash
+.
+├── helm                       # k3s services & deployments, managed with helm
+│   ├── DEPLOYMENTS.md
+│   ├── helmfile.yaml
+│   └── values
+├── kustomize                  # metallb configurations requiring kustomize 
+│   ├── kustomization.yaml
+│   └── metallb
+├── nixos                      # nixos configurations for the homelab hosts
+│   ├── flake.lock
+│   ├── flake.nix
+│   ├── hardware
+│   ├── home
+│   ├── modules
+│   ├── packages
+│   ├── secrets
+│   └── system
+└── README.md```
 
 ## Getting started
 
@@ -18,8 +46,11 @@ The homelab hosts a few important services I use frequently, like Pi-hole and (o
 5. Switch to the `root` user using `sudo -i` and set a password using `passwd`.  **This is a temporary action on the bootable image only!  We're going to replace the entire system with our flake in the next few steps.**
 6. Note the IP address of your target machine using `ip addr`.
 7. Log into your other machine (any machine with the `nix` package manager installed).  Make sure you have this configuration set cloned (or your own) and use `nixos-anywhere` to reformat your disk(s), install NixOS, and switch to your flake configurations:
-```
-nix run github:nix-community/nixos-anywhere -- --flake /path/to/flake.nix#<configuration-name> --target-host root@your-IP
+````
+
+nix run github:nix-community/nixos-anywhere -- --flake
+/path/to/flake.nix#<configuration-name> --target-host root@your-IP
+
 ```
 ⚠️ **WARNING**
 Sometimes `nixos-anywhere` will try to build on your local rather than your remote.  In most cases this is probably a good thing, since your main machine likely has more power to contribute to building your system.  However, in certain cases, the source platform/architecture is not compatible with the target (like using macOS/aarch-darwin with an x86 Intel target).  `nixos-anywhere` should detect this, but you can supply the `--build-on remote` option to force a build on your remote server.
@@ -27,8 +58,7 @@ Sometimes `nixos-anywhere` will try to build on your local rather than your remo
 
 ## Configuration
 
-TODO: re-write
-
+Configuration for the homelab node hosts is fully managed by NixOS, and can be 
 ## Secrets Management
 
 ## Keep the lights on
@@ -77,44 +107,39 @@ few simple steps to get started accessing homelab via your host machine:
 
 2. Copy down the `k3s.yaml` file which defines the cluster specs and
    certificates from homelab to your host machine into `~/.kube/config`:
-
-```
-❯ scp -r <user>@<host>:/etc/rancher/k3s/k3s.yaml ~/.kube/config
 ```
 
+❯ scp -r ${USER}@${HOST}:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+
+```
 3. Modify the `server` entry in your newly created `~/.kube/config` to use the
    hostname/IP of your control host, rather than `localhost`: _Unmodified
    entry_:
-
-```
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: [...]
-    server: https://localhost:6443  <-----------
-  name: default
-contexts:
 ```
 
+apiVersion: v1 clusters:
+
+- cluster: certificate-authority-data: [...] server: https://localhost:6443
+  <----------- name: default contexts:
+
+```
 _Modified entry_:
-
-```
-apiVersion: v1
-clusters:
-- cluster:
-    certificate-authority-data: [...]
-    server: https://homelab-0:6443  <-----------
-  name: default
-contexts:
 ```
 
+apiVersion: v1 clusters:
+
+- cluster: certificate-authority-data: [...] server: https://homelab-0:6443
+  <----------- name: default contexts:
+
+````
 4. You can now test your setup by issuing a `kubectl` command:
 
-```
-❯ kubectl get nodes
-NAME        STATUS   ROLES                       AGE   VERSION
-homelab-0   Ready    control-plane,etcd,master   63d   v1.30.4+k3s1
-```
+```bash 
+
+❯ kubectl get nodes 
+NAME STATUS ROLES AGE VERSION homelab-0 Ready
+control-plane,etcd,master 63d v1.30.4+k3s1
+````
 
 > [!TIP]
 > Aliasing `kubectl` to `k` in your profile greatly reduces the number of
@@ -127,7 +152,7 @@ resources. If you need to update or manage a k3s deployment, you will need to
 modify the respective helmchart and values appropriately, then run a simple
 apply:
 
-```
+```bash
 helmfile apply
 ```
 
@@ -175,3 +200,6 @@ homelab was built intially by following along with
 [Elliott at Dreams of Autonomy](https://youtu.be/2yplBzPCghA). Many of the
 charts and configurations are quite similar (if not identical in some cases),
 with customizations specifically for my own hardware and use cases.
+
+```
+```
