@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # enableLSP = true;
   enableFormat = true;
   enableTreesitter = true;
@@ -15,9 +16,13 @@
     };
     format = {
       enable = true;
-      type = "alejandra";
+      type = [
+        "alejandra"
+      ];
     };
-    lsp.server = "nil";
+    lsp.servers = [
+      "nil"
+    ];
   };
   markdown = {
     enable = true;
@@ -31,14 +36,14 @@
   java.enable = true;
   kotlin.enable = true;
   ts.enable = true;
-  go = {
-    enable = true;
-    format = {
-      enable = true;
-      package = pkgs.gofumpt;
-      type = "gofumpt";
-    };
-  };
+  # go = {
+  #   enable = true;
+  #   format = {
+  #     enable = true;
+  #     package = pkgs.gofumpt;
+  #     type = "gofumpt";
+  #   };
+  # };
   helm.enable = true;
   lua.enable = true;
   zig.enable = true;
@@ -47,7 +52,9 @@
   # this requires null-ls, which is not ideal.
   rust = {
     enable = true;
-    crates.enable = true;
+    extensions = {
+      crates-nvim.enable = true;
+    };
   };
   # Nim LSP is broken on Darwin
   nim.enable = false;
