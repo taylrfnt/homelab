@@ -1,5 +1,6 @@
-{pkgs, ...}:
-with pkgs.vimPlugins; {
+{ pkgs, ... }:
+with pkgs.vimPlugins;
+{
   smart-splits = {
     setup = ''
       require('smart-splits').setup({
@@ -18,4 +19,26 @@ with pkgs.vimPlugins; {
     '';
     package = smart-splits-nvim;
   };
+  # sidekick = {
+  #   setup = ''
+  #     require('sidekick').setup({
+  #       cli = {
+  #         tools = {
+  #           amp = {
+  #             cmd = { "amp", "--ide" },
+  #           },
+  #         },
+  #       },
+  #     })
+  #   '';
+  #   package = sidekick-nvim;
+  # };
+  # amp = {
+  #   setup = ''
+  #     require('amp').setup({
+  #       auto_start = true, log_level = info
+  #     })
+  #   '';
+  #   package = amp-nvim;
+  # };
 }

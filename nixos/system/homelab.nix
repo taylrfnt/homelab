@@ -8,7 +8,8 @@
   # pkgs-stable,
   meta,
   ...
-}: {
+}:
+{
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -16,8 +17,8 @@
     gc.automatic = true;
     # enable community cache for modules
     settings = {
-      substituters = ["http://nix-community.cachix.org"];
-      trusted-public-keys = ["nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="];
+      substituters = [ "http://nix-community.cachix.org" ];
+      trusted-public-keys = [ "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" ];
     };
   };
 
@@ -76,7 +77,8 @@
       package = pkgs.k3s;
       role = "server";
       tokenFile = config.sops.secrets."rancher/k3s/server/token".path;
-      extraFlags = toString ([
+      extraFlags = toString (
+        [
           "--write-kubeconfig-mode \"0644\""
           "--cluster-init"
           "--disable servicelb"
@@ -85,13 +87,15 @@
           "--prefer-bundled-bin"
         ]
         ++ (
-          if meta.hostname == "homelab-0"
-          then []
-          else [
-            # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
-            "--server https://192.168.1.64:6443"
-          ]
-        ));
+          if meta.hostname == "homelab-0" then
+            [ ]
+          else
+            [
+              # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
+              "--server https://192.168.1.64:6443"
+            ]
+        )
+      );
       clusterInit = meta.hostname == "homelab-0";
     };
 
@@ -118,15 +122,23 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.taylor = {
-    isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for the user.
-    shell = pkgs.zsh;
-    # Created using mkpasswd
-    hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8wB5rMU+3zBLjdzq4E4ziK74XTyPEqLRoiMmI7UbJ4 taylor@amaterasu"
-    ];
+  users.users = {
+    taylor = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      shell = pkgs.zsh;
+      # Created using mkpasswd
+      hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8wB5rMU+3zBLjdzq4E4ziK74XTyPEqLRoiMmI7UbJ4 taylor@amaterasu"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDIIgS4ijWFQSsH+icfod1IdPThAbmgl4zEF/zn9/vOG bw"
+      ];
+    };
+    root = {
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2TxJaavyg2CARn1kHa+eiLlC6NQrfKw+VlyPCrCVrT bw"
+      ];
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

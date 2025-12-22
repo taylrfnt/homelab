@@ -1,8 +1,9 @@
 {
   pkgs,
-  # lib,
+  lib,
   ...
-}: {
+}:
+{
   programs.nvf = {
     enable = true;
     settings = {
@@ -42,6 +43,21 @@
           vim.opt.list = true
         '';
 
+        # autocmd
+        autocmds = [
+          {
+            enable = true;
+            callback = lib.mkLuaInline ''
+              function()
+                vim.b.completion = false
+              end
+            '';
+            desc = "Disable blink.cmp completion for NvimTree buffers.";
+            event = [ "BufEnter" ];
+            pattern = [ "NvimTree" ];
+          }
+        ];
+
         # nvim lsp settings
         lsp = {
           enable = true;
@@ -49,7 +65,7 @@
           lspconfig = {
             enable = true;
           };
-          null-ls.enable = true;
+          null-ls.enable = false;
           # NOTE: lspkind requires nvim.cmp or blink.cmp
           lspkind.enable = true;
           lightbulb.enable = false;
@@ -61,7 +77,7 @@
         };
 
         # language support
-        languages = import ./languages/default.nix {inherit pkgs;};
+        languages = import ./languages/default.nix { inherit pkgs; };
 
         diagnostics = {
           enable = true;
@@ -125,12 +141,7 @@
           indent-blankline.enable = true;
         };
 
-        statusline = {
-          lualine = {
-            enable = true;
-            theme = "catppuccin";
-          };
-        };
+        statusline = import ./statusline/default.nix;
 
         theme = {
           enable = true;
@@ -143,14 +154,17 @@
         autocomplete = {
           blink-cmp = {
             enable = true;
-            friendly-snippets.enable = true;
+            # friendly-snippets.enable = true;
             setupOpts = {
+              cmdline = {
+                keymap.preset = "default";
+              };
               signature.enabled = true;
             };
           };
         };
 
-        snippets.luasnip.enable = true;
+        # snippets.luasnip.enable = true;
 
         filetree = {
           nvimTree = {
@@ -278,14 +292,17 @@
               nix = "110";
               ruby = "120";
               java = "130";
-              go = ["90" "130"];
+              go = [
+                "90"
+                "130"
+              ];
             };
           };
           fastaction.enable = true;
         };
 
         # load some custom plugins not in the nvf flake
-        extraPlugins = import ./plugins/default.nix {inherit pkgs;};
+        extraPlugins = import ./plugins/default.nix { inherit pkgs; };
       };
     };
   };
