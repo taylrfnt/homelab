@@ -2,7 +2,8 @@
   pkgs,
   # lib,
   ...
-}: let
+}:
+let
   userPkgs = with pkgs; [
     eza
     tree
@@ -18,8 +19,10 @@
     dig
     zsh
     keychain
+    tailscale
   ];
-in {
+in
+{
   environment.systemPackages = globalPkgs;
   users.users.taylor = {
     packages = userPkgs;
