@@ -107,7 +107,7 @@
     # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
-      banner = "\n   _                 _     _ \n  | |_ ___ _____ ___| |___| |_\n  |   | . |     | -_| | .'| . |\n  |_|_|___|_|_|_|___|_|__,|___|\n\n Welcome to homelab.\n\n";
+      banner = builtins.readFile ./ssh/banner.txt;
     };
   };
 
