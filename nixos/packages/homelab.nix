@@ -19,6 +19,7 @@ let
     dig
     zsh
     keychain
+    nh
     tailscale
   ];
 in
