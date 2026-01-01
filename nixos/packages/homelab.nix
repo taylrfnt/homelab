@@ -7,10 +7,11 @@ let
   userPkgs = with pkgs; [
     eza
     tree
-    fastfetch
     oh-my-posh
     zsh-vi-mode
     zsh-autosuggestions
+    kubernetes-helm
+    helmfile
   ];
   globalPkgs = with pkgs; [
     cifs-utils
@@ -19,8 +20,16 @@ let
     dig
     zsh
     keychain
-    nh
+    pass
     tailscale
+    nh
+    microfetch
+    sops
+    ssh-to-age
+    yubikey-manager
+    yubico-piv-tool
+    age-plugin-yubikey
+    ccid
   ];
 in
 {
