@@ -14,8 +14,6 @@ metadata:
     nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     # custom max body size for file uploading like backing image uploading
     nginx.ingress.kubernetes.io/proxy-body-size: 10000m
-    # expose via tailnet
-    tailscale.com/expose = "true"
 spec:
   ingressClassName: nginx
   rules:

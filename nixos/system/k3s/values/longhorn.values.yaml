@@ -1,0 +1,5 @@
+service:
+  ui:
+    annotations:
+      "tailscale.com/expose": "true"
+      "tailscale.com/hostname": "longhorn-ui"

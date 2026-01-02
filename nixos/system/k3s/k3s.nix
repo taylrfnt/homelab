@@ -69,6 +69,7 @@
           hash = "sha256:a871d397e19cf3243949abd41fd294869f5c2c490014f29e71866a2433ec7fb9";
           createNamespace = true;
           targetNamespace = "longhorn-system";
+          values = ./values/longhorn.values.yaml;
         };
         # this isn't working - need to debug.  plus, i think this leaves secrets in the store readable
         # tailscale-operator = {
