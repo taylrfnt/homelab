@@ -54,9 +54,13 @@
           enable = true;
           source = config.sops.templates.tailscale-operator.path;
         };
-        tailscale-subnet-router = {
+        tailscale-pod-subnet-router = {
           enable = true;
-          source = ./manifests/tailscale-subnet-router.yaml;
+          source = ./manifests/tailscale-pod-subnet-router.yaml;
+        };
+        tailscale-svc-subnet-router = {
+          enable = true;
+          source = ./manifests/tailscale-svc-subnet-router.yaml;
         };
       };
 
