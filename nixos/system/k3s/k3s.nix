@@ -38,6 +38,8 @@
         )
       );
       clusterInit = meta.hostname == "homelab-0";
+
+      # manifests are used for secrets and other resources that do not have charts
       manifests = {
         # https://longhorn.io/docs/1.10.1/deploy/accessing-the-ui/longhorn-ingress/
         longhorn-ui-auth = {
@@ -48,7 +50,14 @@
           enable = true;
           source = ./manifests/longhorn-ingress.yaml;
         };
+        # https://tailscale.com/kb/1185/kubernetes
+        tailscale-auth = {
+          enable = true;
+          source = config.sops.templates.tailscale-auth.path;
+        };
       };
+
+      # for resources that have helm charts, use them
       autoDeployCharts = {
         longhorn = {
           name = "longhorn";

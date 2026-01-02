@@ -3,6 +3,7 @@
   sops = {
     secrets = {
       "rancher/longhorn/ui/auth" = { };
+      "tailscale/auth-key" = { };
     };
     templates = {
       "longhorn-ui-auth" = {
@@ -15,6 +16,16 @@
           type: Opaque
           data:
             auth: ${config.sops.placeholder."rancher/longhorn/ui/auth"}
+        '';
+      };
+      "tailscale-auth" = {
+        content = ''
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: tailscale-auth
+          stringData:
+            TS_AUTHKEY: ${config.sops.placeholder."tailscale/auth-key"}
         '';
       };
     };
