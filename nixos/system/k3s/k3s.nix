@@ -85,6 +85,15 @@
         #   targetNamespace = "tailscale";
         #   values = config.sops.templates.tailscale-operator-values.path;
         # };
+        cloudnative-pg = {
+          name = "cloudnative-pg";
+          repo = "https://cloudnative-pg.io/charts";
+          version = "0.27.0";
+          hash = "sha256:39b1a0cd0cc6b964f856fb8c819cc5888f14f985ff24cf3af25669667ac5046c";
+          createNamespace = true;
+          targetNamespace = "cnpg-system";
+          values = ./values/cnpg-operator.values.yaml;
+        };
       };
     };
 
