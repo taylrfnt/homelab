@@ -80,16 +80,16 @@
       # Created using mkpasswd
       hashedPassword = "$6$QHI78ky1rOZZkAOh$FCRwbkcpLynrwzuQ1shI6q5s3xav7ipfp4voxWxNZM7SKR5ga7RWhcmWPpFfb0jmTXObd39mvG9I.h4n3XJZx1";
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB8wB5rMU+3zBLjdzq4E4ziK74XTyPEqLRoiMmI7UbJ4 taylor@amaterasu"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDIIgS4ijWFQSsH+icfod1IdPThAbmgl4zEF/zn9/vOG bw"
-        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIE3+mtLkwVSoE9ruuWDmzXH6XvsvjrXQ5E/Hjg1gmcV3AAAAD3NzaDp1c2VyX3RheWxvcg== taylor.font@proton.me"
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIE3+mtLkwVSoE9ruuWDmzXH6XvsvjrXQ5E/Hjg1gmcV3AAAAD3NzaDp1c2VyX3RheWxvcg== blue key"
+        "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPbS9n6TIPuk9WwvMc+uq6eWIoiOKTbwtEZ+E2DC03aPAAAAD3NzaDp1c2VyX3RheWxvcg== green key"
       ];
     };
-    root = {
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2TxJaavyg2CARn1kHa+eiLlC6NQrfKw+VlyPCrCVrT bw"
-      ];
-    };
+    # root = {
+    #   openssh.authorizedKeys.keys = [
+    #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG2TxJaavyg2CARn1kHa+eiLlC6NQrfKw+VlyPCrCVrT bw"
+    #   ];
+    # };
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
