@@ -1,6 +1,7 @@
 keys:
   - &admin_amaterasu age1g8f0yer8tnu36jpkksjpn4mp2qj3qyr9vdpqkzaks28ggwtmfyyq99z8qs
-  - &admin_taylor age1yubikey1qfsyn7p204sccq00tkdy6nuj5fwtfhmetfkdh963vxet8acnguvn783r302
+  - &admin_blue age1yubikey1qfsyn7p204sccq00tkdy6nuj5fwtfhmetfkdh963vxet8acnguvn783r302
+  - &admin_green age1yubikey1qg45yl27j5y666uh0v5m3pdf9lxtjxwj6rqhsttzzjq55479dcfcjfn6tnc
   - &server_homelab_0 age14j6qxthwtamz46c8hnklpsrvwvc802stnqctn6cvvm2qjh0fe9lqejceq4
   - &server_homelab_1 age1gx4n6dmna8y9yc5925mv5esrfdzz69lt9tp4yztqd5rfnszr0c7qx7juj4 
 creation_rules:
@@ -8,6 +9,7 @@ creation_rules:
     key_groups:
       - age:
         - *admin_amaterasu
-        - *admin_taylor
+        - *admin_blue
+        - *admin_green
         - *server_homelab_0
         - *server_homelab_1
