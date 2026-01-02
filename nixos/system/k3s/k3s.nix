@@ -54,6 +54,10 @@
           enable = true;
           source = config.sops.templates.tailscale-operator.path;
         };
+        tailscale-subnet-router = {
+          enable = true;
+          source = ./manifests/tailscale-subnet-router.yaml;
+        };
       };
 
       # for resources that have helm charts, use them
