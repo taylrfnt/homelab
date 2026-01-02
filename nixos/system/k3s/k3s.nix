@@ -50,10 +50,9 @@
           enable = true;
           source = ./manifests/longhorn-ingress.yaml;
         };
-        # https://tailscale.com/kb/1185/kubernetes
-        tailscale-auth = {
+        tailscale-operator = {
           enable = true;
-          source = config.sops.templates.tailscale-auth.path;
+          source = config.sops.templates.tailscale-operator.path;
         };
       };
 
@@ -67,6 +66,16 @@
           createNamespace = true;
           targetNamespace = "longhorn-system";
         };
+        # this isn't working - need to debug.  plus, i think this leaves secrets in the store readable
+        # tailscale-operator = {
+        #   name = "tailscale-operator";
+        #   repo = "https://pkgs.tailscale.com/helmcharts";
+        #   version = "1.92.4";
+        #   hash = "sha256:a64828964ee38b79448a54e52f5d819da2295ed10856de0c89414aa2e1fc7dc3";
+        #   createNamespace = true;
+        #   targetNamespace = "tailscale";
+        #   values = config.sops.templates.tailscale-operator-values.path;
+        # };
       };
     };
 
