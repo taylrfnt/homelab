@@ -20,6 +20,14 @@
         '';
       };
 
+      "tailscale-operator.values.yaml" = {
+        content = ''
+          oauth:
+            clientId: "${config.sops.placeholder."tailscale/oauth/clientId"}"
+            clientSecret: "${config.sops.placeholder."tailscale/oauth/clientSecret"}"
+        '';
+      };
+
       "tailscale-operator" = {
         content = ''
           # Copyright (c) Tailscale Inc & AUTHORS
