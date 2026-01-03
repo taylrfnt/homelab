@@ -102,9 +102,6 @@
           targetNamespace = "cnpg-system";
           values = ./values/cnpg-operator.values.yaml;
         };
-        cnpg-cluster = {
-          name = "database";
-        };
       };
     };
 
