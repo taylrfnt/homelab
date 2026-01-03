@@ -51,7 +51,7 @@
           source = ./manifests/longhorn-ingress.yaml;
         };
         tailscale-operator = {
-          enable = false;
+          enable = true;
           source = config.sops.templates.tailscale-operator.path;
         };
         tailscale-pod-subnet-router = {
@@ -61,6 +61,14 @@
         tailscale-svc-subnet-router = {
           enable = false;
           source = ./manifests/tailscale-svc-subnet-router.yaml;
+        };
+        cnpg-thatsneatdev-auth = {
+          enable = true;
+          source = config.sops.templates.cnpg-thatsneatdev-auth.path;
+        };
+        cnpg-thatsneatdev-cluster = {
+          enable = true;
+          source = ./manifests/cnpg-thatsneatdev-cluster.yaml;
         };
       };
 
@@ -93,6 +101,9 @@
           createNamespace = true;
           targetNamespace = "cnpg-system";
           values = ./values/cnpg-operator.values.yaml;
+        };
+        cnpg-cluster = {
+          name = "database";
         };
       };
     };

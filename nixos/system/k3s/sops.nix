@@ -5,6 +5,8 @@
       "rancher/longhorn/ui/auth" = { };
       "tailscale/oauth/clientId" = { };
       "tailscale/oauth/clientSecret" = { };
+      "cnpg/admin/username" = { };
+      "cnpg/admin/password" = { };
     };
     templates = {
       "longhorn-ui-auth" = {
@@ -25,6 +27,21 @@
           oauth:
             clientId: "${config.sops.placeholder."tailscale/oauth/clientId"}"
             clientSecret: "${config.sops.placeholder."tailscale/oauth/clientSecret"}"
+        '';
+      };
+
+      "cnpg-thatsneatdev-auth" = {
+        # cnpg wants a basic-auth secret instead of Opaque
+        content = ''
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: thatsneatdev-auth
+            namespace: cnpg-system
+          type: kubernetes.io/basic-auth
+          stringData:
+            username: "${config.sops.placeholder."cnpg/admin/username"}"
+            password: "${config.sops.placeholder."cnpg/admin/password"}"
         '';
       };
 
