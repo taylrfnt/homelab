@@ -67,7 +67,7 @@
           source = config.sops.templates.cnpg-thatsneatdev-auth.path;
         };
         cnpg-thatsneatdev-cluster = {
-          enable = true;
+          enable = false;
           source = ./manifests/cnpg-thatsneatdev-cluster.yaml;
         };
       };
