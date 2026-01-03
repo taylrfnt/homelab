@@ -54,14 +54,14 @@
           enable = true;
           source = config.sops.templates.tailscale-operator.path;
         };
-        tailscale-pod-subnet-router = {
-          enable = false;
-          source = ./manifests/tailscale-pod-subnet-router.yaml;
-        };
-        tailscale-svc-subnet-router = {
-          enable = false;
-          source = ./manifests/tailscale-svc-subnet-router.yaml;
-        };
+        # tailscale-pod-subnet-router = {
+        #   enable = false;
+        #   source = ./manifests/tailscale-pod-subnet-router.yaml;
+        # };
+        # tailscale-svc-subnet-router = {
+        #   enable = false;
+        #   source = ./manifests/tailscale-svc-subnet-router.yaml;
+        # };
         cnpg-thatsneatdev-auth = {
           enable = true;
           source = config.sops.templates.cnpg-thatsneatdev-auth.path;
