@@ -11,5 +11,6 @@ spec:
     initdb:
       database: thatsneatdb
       owner: thatsneatdev
+      ensure: absent
       secret:
         name: thatsneatdev-auth
