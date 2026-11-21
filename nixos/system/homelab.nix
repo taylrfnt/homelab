@@ -108,7 +108,7 @@
     openssh = {
       enable = true;
       settings = {
-        Banner = builtins.readFile ./ssh/banner.txt;
+        Banner = ./ssh/banner.txt;
       };
     };
   };
