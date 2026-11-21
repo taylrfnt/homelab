@@ -1,6 +1,7 @@
 {
   pkgs,
-  # lib,
+  lib,
+  inputs,
   ...
 }:
 let
@@ -23,6 +24,11 @@ let
   ];
 in
 {
+  nixpkgs.config.allowUnfreePredicate = 
+    pkg: 
+    builtins.elem (lib.getName pkg) [
+      "copilot-language-server"
+    ];
   environment.systemPackages = globalPkgs;
   users.users.taylor = {
     packages = userPkgs;

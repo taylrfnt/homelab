@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+_: {
   # enableLSP = true;
   enableFormat = true;
   enableTreesitter = true;
@@ -23,28 +22,28 @@
     };
     lsp.servers = [ "nil" ];
   };
-  markdown = {
-    enable = true;
-    extensions.render-markdown-nvim.enable = true;
-  };
+  # markdown = {
+  #   enable = true;
+  #   extensions.render-markdown-nvim.enable = true;
+  # };
   bash.enable = true;
-  clang.enable = true;
+  clang.enable = false;
   css.enable = true;
   html.enable = true;
-  sql.enable = true;
+  # sql.enable = true;
   java.enable = true;
   kotlin.enable = true;
-  ts.enable = true;
-  # go = {
-  #   enable = true;
-  #   format = {
-  #     enable = true;
-  #     type = [
-  #       "gofumpt"
-  #       "golines"
-  #     ];
-  #   };
-  # };
+  # ts.enable = true;
+  go = {
+    enable = true;
+    format = {
+      enable = true;
+      type = [
+        "gofumpt"
+        "golines"
+      ];
+    };
+  };
   helm.enable = true;
   lua.enable = true;
   zig.enable = true;
@@ -56,5 +55,5 @@
   #   crates.enable = true;
   # };
   # Nim LSP is broken on Darwin
-  nim.enable = false;
+  # nim.enable = true;
 }
