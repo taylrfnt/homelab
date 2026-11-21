@@ -107,7 +107,9 @@
     # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
-      banner = builtins.readFile ./ssh/banner.txt;
+      settings = {
+        Banner = builtins.readFile ./ssh/banner.txt;
+      };
     };
   };
 
