@@ -2,8 +2,7 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   programs.nvf = {
     enable = true;
     settings = {
@@ -14,7 +13,7 @@
         withPython3 = true;
 
         # aliases
-        viAlias = false;
+        viAlias = true;
         vimAlias = true;
 
         # keymaps
@@ -27,6 +26,8 @@
           autoindent = true;
           signcolumn = "no";
           wrap = false;
+          foldmethod = "manual";
+          foldlevelstart = 99;
         };
 
         # custom lua to run at startup
@@ -41,6 +42,7 @@
             nbsp = "‿",
           }
           vim.opt.list = true
+          vim.opt.fillchars:append({ eob = " " })
         '';
 
         # autocmd
@@ -53,8 +55,8 @@
               end
             '';
             desc = "Disable blink.cmp completion for NvimTree buffers.";
-            event = [ "BufEnter" ];
-            pattern = [ "NvimTree" ];
+            event = ["BufEnter"];
+            pattern = ["NvimTree"];
           }
         ];
 
@@ -77,7 +79,9 @@
         };
 
         # language support
-        languages = import ./languages/default.nix { inherit pkgs; };
+        languages = import ./languages/default.nix {inherit pkgs;};
+        # formatters
+        formatter = import ./languages/formatter.nix {};
 
         diagnostics = {
           enable = true;
@@ -143,12 +147,13 @@
 
         statusline = import ./statusline/default.nix;
 
-        theme = {
-          enable = true;
-          name = "catppuccin";
-          style = "mocha";
-          transparent = false;
-        };
+        # migrating to stylix
+        # theme = {
+        #   enable = true;
+        #   name = "catppuccin";
+        #   style = "mocha";
+        #   transparent = false;
+        # };
 
         autopairs.nvim-autopairs.enable = true;
         autocomplete = {
@@ -233,16 +238,6 @@
           enable = true;
         };
 
-        minimap = {
-          minimap-vim.enable = false;
-          codewindow = {
-            enable = true;
-            mappings = {
-              toggle = "<leader>mt";
-            };
-          };
-        };
-
         notes = {
           todo-comments.enable = true;
         };
@@ -302,7 +297,7 @@
         };
 
         # load some custom plugins not in the nvf flake
-        extraPlugins = import ./plugins/default.nix { inherit pkgs; };
+        extraPlugins = import ./plugins/default.nix {inherit pkgs;};
       };
     };
   };
