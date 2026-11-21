@@ -27,8 +27,8 @@ in
   nixpkgs.config.allowUnfreePredicate = 
     pkg: 
     builtins.elem (lib.getName pkg) [
-┃     "copilot-language-server"
-┃   ];
+      "copilot-language-server"
+    ];
   environment.systemPackages = globalPkgs;
   users.users.taylor = {
     packages = userPkgs;
