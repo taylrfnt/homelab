@@ -1,29 +1,54 @@
 # Homelab
 
-This repo is a self-contained collection of various configurations used to manage my homelab cluster.  The homelab is a multi-node k3s cluster managed via helm running on NixOS server hosts.  It's declarative (almost) all the way down.  
+This repo is a self-contained collection of various configurations used to
+manage my homelab cluster. The homelab is a multi-node k3s cluster managed via
+helm running on NixOS server hosts. It's declarative (almost) all the way down.
 
-The homelab hosts a few important services I use frequently, like Pi-hole and (occasionally) a PostgreSQL database instance I can develop against in the comfort of my home network before going out to those expensive cloud hosts.
+The homelab hosts a few important services I use frequently, like Pi-hole and
+(occasionally) a PostgreSQL database instance I can develop against in the
+comfort of my home network before going out to those expensive cloud hosts.
 
 ## Getting started
 
->[!IMPORTANT]
->You will need:
+> [!IMPORTANT]
+> You will need:
+>
 > - A machine with `nix` already installed (NixOS or otherwise)
 > - At least one target machine you wish to install NixOS and your flake on.
 
-1. Create a bootable USB using the latest NixOS Minimal ISO from [the NixOS downloads page](https://nixos.org/download/#nixos-iso).
-2. Plug in the USB to your desired target machine (an old PC, server hosts, etc.) that you wish to run the homelab on.
-3. Power on the machine, holding or pressing the keys you need to reach the boot menu.  For Beelink mini PCs, you need to repeatedly press <kbd>F7</kbd> to get to the boot menu.
-4. Select your USB from the boot menu, and you should reach the basic TTY after about a minute, as the user `nixos`.
-5. Switch to the `root` user using `sudo -i` and set a password using `passwd`.  **This is a temporary action on the bootable image only!  We're going to replace the entire system with our flake in the next few steps.**
+1. Create a bootable USB using the latest NixOS Minimal ISO from
+   [the NixOS downloads page](https://nixos.org/download/#nixos-iso).
+2. Plug in the USB to your desired target machine (an old PC, server hosts,
+   etc.) that you wish to run the homelab on.
+3. Power on the machine, holding or pressing the keys you need to reach the boot
+   menu. For Beelink mini PCs, you need to repeatedly press <kbd>F7</kbd> to get
+   to the boot menu.
+4. Select your USB from the boot menu, and you should reach the basic TTY after
+   about a minute, as the user `nixos`.
+5. Switch to the `root` user using `sudo -i` and set a password using `passwd`.
+   **This is a temporary action on the bootable image only! We're going to
+   replace the entire system with our flake in the next few steps.**
 6. Note the IP address of your target machine using `ip addr`.
-7. Log into your other machine (any machine with the `nix` package manager installed).  Make sure you have this configuration set cloned (or your own) and use `nixos-anywhere` to reformat your disk(s), install NixOS, and switch to your flake configurations:
+7. Log into your other machine (any machine with the `nix` package manager
+   installed). Make sure you have this configuration set cloned (or your own)
+   and use `nixos-anywhere` to reformat your disk(s), install NixOS, and switch
+   to your flake configurations:
+
 ```
 nix run github:nix-community/nixos-anywhere -- --flake /path/to/flake.nix#<configuration-name> --target-host root@your-IP
 ```
-⚠️ **WARNING**
-Sometimes `nixos-anywhere` will try to build on your local rather than your remote.  In most cases this is probably a good thing, since your main machine likely has more power to contribute to building your system.  However, in certain cases, the source platform/architecture is not compatible with the target (like using macOS/aarch-darwin with an x86 Intel target).  `nixos-anywhere` should detect this, but you can supply the `--build-on remote` option to force a build on your remote server.
-8. Your target machine will reboot after the install succeeds, and you should be able to log to the remote in via SSH using your normal user & password (or identity file)!  From here on out, you can use the remote machine directly for flake updates & configuration changes.
+
+⚠️ **WARNING** Sometimes `nixos-anywhere` will try to build on your local rather
+than your remote. In most cases this is probably a good thing, since your main
+machine likely has more power to contribute to building your system. However, in
+certain cases, the source platform/architecture is not compatible with the
+target (like using macOS/aarch-darwin with an x86 Intel target).
+`nixos-anywhere` should detect this, but you can supply the `--build-on remote`
+option to force a build on your remote server. 8. Your target machine will
+reboot after the install succeeds, and you should be able to log to the remote
+in via SSH using your normal user & password (or identity file)! From here on
+out, you can use the remote machine directly for flake updates & configuration
+changes.
 
 ## Configuration
 
@@ -40,18 +65,20 @@ Adding a new node is simple - follow the process listed in the
 section.
 
 A few important changes will be needed:
-- A new age key will need to be created and added to the sops-nix configuration in
-`.sops.yaml` for the new server to enable secret access (which is required for a
-new node to join the k3s cluster).
-- A new configuration set (e.g. `homelab-2`) needs to be added to the `flake.nix` and used when running `nixos-anywhere`.
+
+- A new age key will need to be created and added to the sops-nix configuration
+  in `.sops.yaml` for the new server to enable secret access (which is required
+  for a new node to join the k3s cluster).
+- A new configuration set (e.g. `homelab-2`) needs to be added to the
+  `flake.nix` and used when running `nixos-anywhere`.
 
 All other configurations should "just work."
 
 ### Managing k3s deployments in the homelab cluster
 
 homelab runs a kubernetes (k3s) cluster that is enabled with several features,
-such as storage managament (via `longhorn`), load balancing (via `metallb`), and
-DNS configurations. As with any kuberenetes-based platform, you can SSH into
+such as storage management (via `longhorn`), load balancing (via `metallb`), and
+DNS configurations. As with any kubernetes-based platform, you can SSH into
 specific nodes to interact with the control plane; however, it is not necessary.
 
 To manage homelab, you will need the following installed on your host machine:
@@ -61,8 +88,8 @@ To manage homelab, you will need the following installed on your host machine:
 - helm* (dependency of helmfile)
 - helmfile
 
-Assuming you have all of the relevant prequisite packages installed, there are a
-few simple steps to get started accessing homelab via your host machine:
+Assuming you have all of the relevant prerequisite packages installed, there are
+a few simple steps to get started accessing homelab via your host machine:
 
 1. Confirm you have a key that can be used to connect to one of more of the
    nodes via `ssh`.
@@ -118,7 +145,7 @@ homelab-0   Ready    control-plane,etcd,master   63d   v1.30.4+k3s1
 
 > [!TIP]
 > Aliasing `kubectl` to `k` in your profile greatly reduces the number of
-> keystrokes invovled with managing a k3s cluster.
+> keystrokes involved with managing a k3s cluster.
 
 ### Updating deployments
 
@@ -163,15 +190,15 @@ homelab uses the following specs (updated as homelab grows)
 
 ### OS+Software
 
-| Host      | NIXOS            | NIXPKGS    | EXTRA FEATURES       | K3S          |
-| --------- | ---------------- | ---------- | -------------------- | ------------ |
-| homelab-0 | 25.11 (Xantusia) | `unstable` | `nix-command flakes` | v1.33.1+k3s1 |
-| homelab-1 | 25.11 (Xantusia) | `unstable` | `nix-command flakes` | v1.33.1+k3s1 |
-| homelab-2 | N/A              |            |                      |              |
+| Host      | NIXOS         | NIXPKGS    | EXTRA FEATURES       | K3S          |
+| --------- | ------------- | ---------- | -------------------- | ------------ |
+| homelab-0 | 26.11 (Zokor) | `unstable` | `nix-command flakes` | v1.36.6+k3s1 |
+| homelab-1 | 26.11 (Zokor) | `unstable` | `nix-command flakes` | v1.36.6+k3s1 |
+| homelab-2 | N/A           |            |                      |              |
 
 ## References
 
-homelab was built intially by following along with
+homelab was built initially by following along with
 [Elliott at Dreams of Autonomy](https://youtu.be/2yplBzPCghA). Many of the
 charts and configurations are quite similar (if not identical in some cases),
 with customizations specifically for my own hardware and use cases.
