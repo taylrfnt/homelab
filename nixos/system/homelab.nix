@@ -9,6 +9,12 @@
   meta,
   ...
 }:
+let
+  nodeIPs = {
+    homelab-0 = "192.168.1.76";
+    homelab-1 = "192.168.1.75";
+  };
+in
 {
   nix = {
     extraOptions = ''
@@ -85,6 +91,8 @@
           "--disable traefik"
           "--disable local-storage"
           "--prefer-bundled-bin"
+          # pin the node (and etcd peer) IP; otherwise k3s may pick the IPv6 address
+          "--node-ip ${nodeIPs.${meta.hostname}}"
         ]
         ++ (
           if meta.hostname == "homelab-0" then
@@ -92,7 +100,7 @@
           else
             [
               # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
-              "--server https://192.168.1.76:6443"
+              "--server https://${nodeIPs.homelab-0}:6443"
             ]
         )
       );
