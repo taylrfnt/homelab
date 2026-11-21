@@ -92,7 +92,7 @@
           else
             [
               # replace homelab-0 with IP address, if router does not support custom DNS (naughty ISP)
-              "--server https://192.168.1.64:6443"
+              "--server https://192.168.1.76:6443"
             ]
         )
       );
